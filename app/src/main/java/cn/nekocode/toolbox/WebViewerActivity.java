@@ -3,6 +3,7 @@ package cn.nekocode.toolbox;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.avos.avoscloud.AVAnalytics;
 import com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient.CustomViewCallback;
 import com.tencent.smtt.sdk.CookieSyncManager;
@@ -56,10 +57,13 @@ public class WebViewerActivity extends Activity {
 
     Handler mHandler = new Handler(Looper.getMainLooper());
 
-    public static void start(Context context, String url) {
+    public static void start(Context context, String url, String event) {
         Intent intent = new Intent(context, WebViewerActivity.class);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
+
+        if(event != null)
+            AVAnalytics.onEvent(context, event);
     }
 
     @Override
@@ -319,11 +323,11 @@ public class WebViewerActivity extends Activity {
                 if (mWebView.getX5WebViewExtension() != null)
                     mWebView.getX5WebViewExtension().onAppExit();
 
-                if(mWebView.getX5WebViewExtension() == null) {
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                } else {
+//                if(mWebView.getX5WebViewExtension() == null) {
+//                    android.os.Process.killProcess(android.os.Process.myPid());
+//                } else {
                     WebViewerActivity.this.finish();
-                }
+//                }
 
             }
         });

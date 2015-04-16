@@ -13,11 +13,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.PushService;
+import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -153,7 +155,8 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
                 protected void internalDone0(Object o, AVException e) {
                     List<AVObject> avObjects = (List<AVObject>) o;
                     for (AVObject object : avObjects) {
-                        if(object.getInt("sort_id") < 11) {
+                        int sortId = object.getInt("sort_id");
+                        if(sortId < 11 || sortId == 1000) {
                             toolBeans.add(new ToolBean(object.getObjectId(),
                                     object.getAVFile("image").getUrl(), object.getString("title"), object.getString("url"), ""));
                         }
@@ -215,7 +218,14 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
                 List list = adapter.getItems();
                 if(position < list.size()) {
                     ToolBean toolBean = (ToolBean) list.get(position);
-                    WebViewerActivity.start(MainActivity.this, toolBean.getLinkUrl());
+
+                    if(!toolBean.getLinkUrl().equals("SegueToFeedbackController")) {
+                        WebViewerActivity.start(MainActivity.this, toolBean.getLinkUrl(), "打开工具:" + toolBean.getTitle());
+                    } else {
+                        FeedbackAgent agent = new FeedbackAgent(MainActivity.this);
+                        agent.startDefaultThreadActivity();
+                        AVAnalytics.onEvent(MainActivity.this, "打开工具:反馈");
+                    }
                 } else {
                     AddToolsActivity.start(MainActivity.this, toolBeans, 1);
                 }
@@ -249,6 +259,8 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
         KryoUtils.save(MainActivity.this, "toolBeans", toolBeans);
 
         super.onDestroy();
+
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     @Override
@@ -271,6 +283,6 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
     @Override
     public void onSliderClick(BaseSliderView baseSliderView) {
         String url = baseSliderView.getBundle().getString("url");
-        WebViewerActivity.start(this, url);
+        WebViewerActivity.start(this, url, "点击banner:" + url);
     }
 }

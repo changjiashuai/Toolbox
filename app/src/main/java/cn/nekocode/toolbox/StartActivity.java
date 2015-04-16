@@ -11,8 +11,11 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.SaveCallback;
 
+import cn.nekocode.toolbox.utils.KryoUtils;
+
 
 public class StartActivity extends ActionBarActivity {
+    private boolean isExited = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +25,13 @@ public class StartActivity extends ActionBarActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                StartActivity.this.startActivity(intent);
+                if(!isExited) {
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    StartActivity.this.startActivity(intent);
 
-                StartActivity.this.finish();
+                    StartActivity.this.finish();
+                }
+
             }
         }, 2000);
 
@@ -40,5 +46,11 @@ public class StartActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        isExited = true;
+        super.onDestroy();
     }
 }

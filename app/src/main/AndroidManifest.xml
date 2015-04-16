@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".MyApplication"
@@ -22,6 +23,9 @@
             android:name="QBSDKAppKey"
             android:value="DufifJgyUtdqTDC1hbnNgBUZ" >
         </meta-data>
+
+        <!-- 发布渠道暂时为未定义 -->
+        <meta-data android:name="leancloud" android:value="NoDefined"/>
 
         <activity android:name=".StartActivity" >
             <intent-filter>
@@ -35,6 +39,10 @@
         <activity
             android:name=".AddToolsActivity"
             android:label="@string/title_activity_add_tools" >
+        </activity>
+
+        <activity
+            android:name="com.avos.avoscloud.feedback.ThreadActivity" >
         </activity>
 
         <service android:name="com.avos.avoscloud.PushService"/>

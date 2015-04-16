@@ -2,6 +2,7 @@ package cn.nekocode.toolbox;
 
 import android.app.Application;
 
+import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVOSCloud;
 
 /**
@@ -16,6 +17,7 @@ public class MyApplication extends Application {
         instant = this;
 
         AVOSCloud.initialize(this, "pdz9fy8nkestylzzmfxt2hisajfr28oj0dexxnhhruiho4sy", "hpz75r4mfjyypcttrwo9zp0qqbze0vz0k13s7g5heylhmnfp");
+        AVAnalytics.enableCrashReport(this, true);
     }
 
     public static MyApplication get() {

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">全民工具</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_add_tools">AddToolsActivity</string>
+</resources>

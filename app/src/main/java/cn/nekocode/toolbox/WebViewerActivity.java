@@ -71,9 +71,8 @@ public class WebViewerActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFormat(PixelFormat.RGBA_8888);
 
-        Log.e("MainActivity", "QQBrowserSDK core version is " + WebView.getQQBrowserCoreVersion(this));
+//        Log.e("MainActivity", "QQBrowserSDK core version is " + WebView.getQQBrowserCoreVersion(this));
 
-        //if (WebView.getQQBrowserCoreVersion(this) == 0) QbSdk.forceSysWebView();
         Intent intent = getIntent();
         if (intent != null) {
             try {
@@ -183,32 +182,34 @@ public class WebViewerActivity extends Activity {
             @Override
             public void onDownloadStart(String arg0, String arg1, String arg2, String arg3, long arg4) {
                 Log.d(TAG, "url: " + arg0);
-                new AlertDialog.Builder(WebViewerActivity.this).setTitle("是否下载").setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                Toast.makeText(WebViewerActivity.this, "开发者已禁止下载文件ヾ(≧O≦)〃", Toast.LENGTH_SHORT).show();
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(WebViewerActivity.this, "fake message: i'll download...", Toast.LENGTH_SHORT).show();
-                    }
-                }).setNegativeButton("no", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        Toast.makeText(WebViewerActivity.this, "fake message: refuse download...", Toast.LENGTH_SHORT).show();
-                    }
-                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        // TODO Auto-generated method stub
-                        Toast.makeText(WebViewerActivity.this, "fake message: refuse download...", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
+//                new AlertDialog.Builder(WebViewerActivity.this).setTitle("是否下载").setPositiveButton("yes", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(WebViewerActivity.this, "fake message: i'll download...", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // TODO Auto-generated method stub
+//                        Toast.makeText(WebViewerActivity.this, "fake message: refuse download...", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+//
+//                    @Override
+//                    public void onCancel(DialogInterface dialog) {
+//                        // TODO Auto-generated method stub
+//                        Toast.makeText(WebViewerActivity.this, "fake message: refuse download...", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).show();
             }
         });
         // 各种设置
         if (mWebView.getX5WebViewExtension() != null) {
-            Log.e("robins", "CoreVersion_FromSDK::" + mWebView.getX5WebViewExtension().getQQBrowserVersion());
+//            Log.e("robins", "CoreVersion_FromSDK::" + mWebView.getX5WebViewExtension().getQQBrowserVersion());
             mWebView.getX5WebViewExtension().setWebViewClientExtension(new ProxyWebViewClientExtension() {
                 @Override
                 public Object onMiscCallBack(String method, Bundle bundle) {
@@ -218,9 +219,8 @@ public class WebViewerActivity extends Activity {
                     return null;
                 }
             });
-        } else {
-            Log.e("robins", "CoreVersion");
         }
+
         WebSettings webSetting = mWebView.getSettings();
         webSetting.setJavaScriptEnabled(true);
         webSetting.setAllowFileAccess(true);
@@ -323,12 +323,7 @@ public class WebViewerActivity extends Activity {
                 if (mWebView.getX5WebViewExtension() != null)
                     mWebView.getX5WebViewExtension().onAppExit();
 
-//                if(mWebView.getX5WebViewExtension() == null) {
-//                    android.os.Process.killProcess(android.os.Process.myPid());
-//                } else {
                     WebViewerActivity.this.finish();
-//                }
-
             }
         });
 
@@ -468,7 +463,7 @@ public class WebViewerActivity extends Activity {
     private void setUIStyle(WebView x5Webview, boolean isSelfStyle) {
         if (!isSelfStyle) {
             if (!x5Webview.isDayMode()) {
-                Log.e("MainActivity", "Please set different style.");
+                //TODO 非日间模式
             }
             Drawable drawable;
             if ((drawable = NinePatchUtils.getDrawableFromDefaultSkin(x5Webview.getContext(), "theme_scrollbar_horizontal_fg_normal.9.png")) != null) {
@@ -483,9 +478,8 @@ public class WebViewerActivity extends Activity {
             }
             x5Webview.getX5WebViewExtension().setScrollBarDefaultDelayBeforeFade(1000);
         } else {
-
             if (!x5Webview.isDayMode()) {
-                Log.e("MainActivity", "Please set different style.");
+                //TODO 非日间模式
             }
             Drawable drawable;
             if ((drawable = NinePatchUtils.getDrawableFromDefaultSkin(x5Webview.getContext(), "theme_scrollbar_horizontal_fg_normal_self.9.png")) != null) {
@@ -518,7 +512,6 @@ public class WebViewerActivity extends Activity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Log.d(TAG, "onNewIntent");
         if (intent == null || mWebView == null || intent.getData() == null)
             return;
         mWebView.loadUrl(intent.getData().toString());

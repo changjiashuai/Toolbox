@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -255,6 +256,14 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onDestroy() {
         KryoUtils.save(MainActivity.this, "toolBeans", toolBeans);
 
@@ -274,6 +283,7 @@ public class MainActivity extends ActionBarActivity implements BaseSliderView.On
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            SettingActivity.start(this);
             return true;
         }
 

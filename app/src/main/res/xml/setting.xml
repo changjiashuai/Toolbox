@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="功能管理">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="order_by_use_count"
+            android:title="按使用次数排序"
+            android:summary="根据用户点击工具次数进行自动排序" />
+
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory android:title="推送管理">-->
+        <!--<PreferenceScreen android:title="推送消息管理">-->
+            <!--<intent-->
+                <!--android:action="android.intent.action.MAIN"-->
+                <!--android:targetPackage="com.nekocode.xuedao"-->
+                <!--android:targetClass="com.nekocode.xuedao.SuggestActivity" />-->
+        <!--</PreferenceScreen>-->
+    <!--</PreferenceCategory>-->
+</PreferenceScreen>

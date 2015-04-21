@@ -107,6 +107,6 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-5.1.2" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.2.4" level="project" />
-    <orderEntry type="library" exported="" name="lib-dynamicgrid-unspecified" level="project" />
+    <orderEntry type="module" module-name="lib-dynamicgrid" exported="" />
   </component>
 </module>

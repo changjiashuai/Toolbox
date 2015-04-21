@@ -48,7 +48,7 @@ public class ToolAdapter extends BaseDynamicGridAdapter {
 
     @Override
     public int getCount() {
-        return isInEdit ? super.getCount() : super.getCount() + 1;
+        return isInEdit ? super.getCount() + 1 : super.getCount() + 1;
     }
 
     private boolean isInEdit = false;

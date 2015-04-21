@@ -266,6 +266,7 @@ public class DynamicGridView extends GridView {
             wobbleAnimator.cancel();
         }
         mWobbleAnimators.clear();
+
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
             if (v != null) {
@@ -281,7 +282,6 @@ public class DynamicGridView extends GridView {
         startWobbleAnimation();
     }
 
-    //TODO
     private Method shouldShowSelectorMethod;
 
     public void init(Context context) {
@@ -336,6 +336,11 @@ public class DynamicGridView extends GridView {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void animateWobble(View v) {
+        //TODO
+        if(v == getChildAt(getChildCount()-1)) {
+            return;
+        }
+
         ObjectAnimator animator = createBaseWobble(v);
         animator.setFloatValues(-2, 2);
         animator.start();
@@ -344,6 +349,11 @@ public class DynamicGridView extends GridView {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void animateWobbleInverse(View v) {
+        //TODO
+        if(v == getChildAt(getChildCount()-1)) {
+            return;
+        }
+
         ObjectAnimator animator = createBaseWobble(v);
         animator.setFloatValues(2, -2);
         animator.start();
@@ -473,16 +483,18 @@ public class DynamicGridView extends GridView {
                 if (mIsEditMode && isEnabled()) {
                     layoutChildren();
                     int position = pointToPosition(mDownX, mDownY);
-                    startDragAtPosition(position);
+
+                    //TODO
+                    if(position < getChildCount()-1) {
+                        startDragAtPosition(position);
+                    }
+
+
                 } else if (isEnabled()) {
-                    boolean rlt =  super.onTouchEvent(event);
                     int position = pointToPosition(mDownX, mDownY);
                     int itemNum = position - getFirstVisiblePosition();
                     downItemView = getChildAt(itemNum);
                     this.postInvalidate();
-
-                    return rlt;
-
                 } else {
                     return false;
                 }
@@ -783,7 +795,8 @@ public class DynamicGridView extends GridView {
                 }
             }
         }
-        if (targetView != null) {
+        //TODO
+        if (targetView != null && targetView != getChildAt(getChildCount()-1)) {
             final int originalPosition = getPositionForView(mMobileView);
             int targetPosition = getPositionForView(targetView);
 
